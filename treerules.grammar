@@ -1,0 +1,87 @@
+grammar
+ name treerules
+ catchAllNodeType errorLine
+ description A prototype language that compiles to json-rules-engine json.
+ compilesTo json
+ javascript
+  getEngine() {
+    let engine = new RulesEngine.Engine()
+    this.forEach(ruleNode => {
+      engine.addRule(new RulesEngine.Rule(ruleNode.compile()))
+      })
+    return engine
+  }
+  compile() { return JSON.stringify(this.map(ruleNode => ruleNode.compile()), null, 2) }
+ inScope rule
+cellType anyFirstWord
+cellType eventTypeCell
+ highlightScope string
+cellType factCell
+ highlightScope string
+cellType keywordCell
+ highlightScope keyword
+cellType operatorCell
+ enum equal notEqual lessThan lessThanInclusive greaterThan greaterThanInclusive in notIn contains doesNotContain 
+ highlightScope keyword.operator.logical
+cellType paramName
+ highlightScope variable
+cellType paramValue
+ highlightScope constant.numeric
+cellType valueCell
+ highlightScope constant.numeric
+abstract abstract.keyword
+ firstCellType keywordCell
+abstract abstract.conditionGroup
+ extends abstract.keyword
+ inScope condition abstract.conditionGroup
+nodeType errorLine
+nodeType paramNode
+ firstCellType paramName
+ cells paramValue
+nodeType params
+ catchAllNodeType paramNode
+ firstCellType keywordCell
+nodeType type
+ description Event type
+ cells eventTypeCell
+ extends abstract.keyword
+nodeType all
+ extends abstract.conditionGroup
+ javascript
+  compile() { return {all: this.map(condition => condition.compile())}}
+ description The all operator specifies that all conditions contained within must be truthy for the rule to be considered a success.
+nodeType any
+ extends abstract.conditionGroup
+ javascript
+  compile() { return {any: this.map(condition => condition.compile())}}
+ description The any operator only requires one condition to be truthy for the rule to succeed.
+nodeType condition
+ extends abstract.keyword
+ inScope operator fact value params
+ javascript
+  compile() { return this.toObject()}
+nodeType event
+ single
+ inScope type params
+ extends abstract.keyword
+nodeType fact
+ extends abstract.keyword
+ catchAllCellType factCell
+nodeType operator
+ extends abstract.keyword
+ cells operatorCell
+nodeType rule
+ inScope any all event
+ extends abstract.keyword
+ javascript
+  compile() {
+    const rootCondition = this.has("any") ? this.getNode("any").compile() : this.getNode("all").compile()
+    const conditions = Object.assign({}, rootCondition)
+    return {
+      conditions: conditions,
+      event: this.getNode("event").toObject()
+    }
+  }
+nodeType value
+ extends abstract.keyword
+ catchAllCellType valueCell

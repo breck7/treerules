@@ -1,0 +1,16 @@
+{
+  "name": "treerules",
+  "version": "1.0.0",
+  "description": "exploring json-rules-engine in tree notation",
+  "main": "index.js",
+  "dependencies": {
+    "json-rules-engine": "^3.0.2",
+    "jtree": "^27.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Breck Yunits",
+  "license": "Unlicensed"
+}

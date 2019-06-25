@@ -1,0 +1,28 @@
+rule
+ all
+  condition
+   fact age
+   operator greaterThanInclusive
+   value 18
+  condition
+   fact age
+   operator lessThanInclusive
+   value 25
+  any
+   condition
+    fact state
+    params
+     country us
+    operator equal
+    value CO
+   condition
+    fact state
+    params
+     country us
+    operator equal
+    value UT
+ event
+  type young-adult-rocky-mnts
+  params
+   giftCard amazon
+   value 50

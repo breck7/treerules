@@ -1,5 +1,7 @@
 # Tree Rules
 
+![A screenshot](/screenshot.png "Screenshot")
+
 A quick exploration of what json-rules-engine + Tree Notation might look like. For now just called it "treerules", but you may want to have a better language name.
 
 I just took the example from "https://github.com/CacheControl/json-rules-engine/blob/master/docs/walkthrough.md" and wrote it in a Tree Language instead of JSON. You can see that at "sample.treerules".

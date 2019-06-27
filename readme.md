@@ -18,7 +18,7 @@ The Grammar file is at "treerules.grammar"
 
 ### Editing
 
-You can get autocomplete, syntax highlighting, and type checking at http://treenotation.org/sandbox/grammars.html
+You can get autocomplete, syntax highlighting, and type checking at http://treenotation.org/sandbox/build/
 
 Just paste the "treerules.grammar" code into the box on the left, and your source code on the right.
 
